@@ -8,5 +8,13 @@
   },
   "keywords": [],
   "author": "Elton Nascimento <eltongarbin@gmail.com> (https://github.com/eltongarbin)",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-regenerator-runtime": "^6.5.0"
+  }
 }
