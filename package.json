@@ -4,12 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start-dev":
-      "cross-env NODE_ENV=development babel-node server --useLiveData=true"
+    "start-dev": "cross-env NODE_ENV=development babel-node server --useLiveData=true"
   },
   "keywords": [],
-  "author":
-    "Elton Nascimento <eltongarbin@gmail.com> (https://github.com/eltongarbin)",
+  "author": "Elton Nascimento <eltongarbin@gmail.com> (https://github.com/eltongarbin)",
   "license": "ISC",
   "dependencies": {
     "babel-core": "^6.26.3",
@@ -21,6 +19,7 @@
     "express": "^4.16.3",
     "express-yields": "^1.1.2",
     "fs-extra": "^6.0.0",
+    "lodash": "^4.17.10",
     "optimist": "^0.6.1",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
