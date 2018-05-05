@@ -4,13 +4,20 @@ import fs from 'fs-extra';
 import webpack from 'webpack';
 import { argv } from 'optimist';
 import { get } from 'request-promise';
-import { questions, question } from '../data/api-real-url';
 import { delay } from 'redux-saga';
+import { renderToString } from 'react-dom/server';
+import { Provider } from 'react-redux';
+import React from 'react';
+
+import { questions, question } from '../data/api-real-url';
+import getStore from '../src/getStore';
+import App from '../src/App';
 
 const port = process.env.PORT || 3000;
 const app = express();
 
 const useLiveData = argv.useLiveData === 'true';
+const useServerRender = argv.useServerRender === 'true';
 
 function* getQuestions() {
   let data;
@@ -67,6 +74,28 @@ if (process.env.NODE_ENV === 'development') {
 
 app.get(['/'], function*(req, res) {
   let index = yield fs.readFile('./public/index.html', 'utf-8');
+  const initialState = {
+    questions: []
+  };
+  const questions = yield getQuestions();
+  initialState.questions = questions.items;
+
+  const store = getStore(initialState);
+
+  if (useServerRender) {
+    const appRendered = renderToString(
+      <Provider store={store}>
+        <App />
+      </Provider>
+    );
+    index = index.replace('<%= preloadedApplication %>', appRendered);
+  } else {
+    index = index.replace(
+      '<%= preloadedApplication %>',
+      'Please wait while we load the application.'
+    );
+  }
+
   res.send(index);
 });
 
