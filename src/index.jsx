@@ -1,23 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'react-router-redux';
+import createHistory from 'history/createBrowserHistory';
 
 import App from './App';
 import getStore from './getStore';
 
-const store = getStore();
-const fetchDataForLocation = () => {
-  store.dispatch({ type: 'REQUEST_FETCH_QUESTIONS' });
-};
-
-const render = (_App) => {
-  ReactDOM.render(
-    <Provider store={store}>
-      <_App />
-    </Provider>,
-    document.getElementById('AppContainer')
-  );
-};
+const history = createHistory();
+const store = getStore(history);
 
 if (module.hot) {
   module.hot.accept('./App', () => {
@@ -26,14 +17,37 @@ if (module.hot) {
   });
 }
 
-//render(App);
+const render = (_App) => {
+  ReactDOM.render(
+    <Provider store={store}>
+      <ConnectedRouter history={history}>
+        <_App />
+      </ConnectedRouter>
+    </Provider>,
+    document.getElementById('AppContainer')
+  );
+};
+
 store.subscribe(() => {
   const state = store.getState();
   if (state.questions.length > 0) {
-    console.info('Mounting app');
     render(App);
-  } else {
-    console.info('App not yet mounting');
   }
 });
-fetchDataForLocation();
+
+const fetchDataForLocation = (location) => {
+  if (location.pathname === '/') {
+    store.dispatch({ type: `REQUEST_FETCH_QUESTIONS` });
+  }
+
+  if (location.pathname.includes(`questions`)) {
+    store.dispatch({
+      type: `REQUEST_FETCH_QUESTION`,
+      question_id: location.pathname.split('/')[2]
+    });
+  }
+};
+
+fetchDataForLocation(history.location);
+
+history.listen(fetchDataForLocation);
