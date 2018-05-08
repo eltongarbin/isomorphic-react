@@ -37,12 +37,12 @@ store.subscribe(() => {
 
 const fetchDataForLocation = (location) => {
   if (location.pathname === '/') {
-    store.dispatch({ type: `REQUEST_FETCH_QUESTIONS` });
+    store.dispatch({ type: 'REQUEST_FETCH_QUESTIONS' });
   }
 
-  if (location.pathname.includes(`questions`)) {
+  if (location.pathname.includes('questions')) {
     store.dispatch({
-      type: `REQUEST_FETCH_QUESTION`,
+      type: 'REQUEST_FETCH_QUESTION',
       question_id: location.pathname.split('/')[2]
     });
   }

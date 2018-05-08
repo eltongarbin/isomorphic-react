@@ -102,6 +102,7 @@ app.get(['/', '/questions/:id'], function*(req, res) {
     initialState.questions = [{ ...questionDetails, question_id }];
   } else {
     const questions = yield getQuestions();
+
     initialState.questions = [...questions.items];
   }
 

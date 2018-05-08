@@ -1,14 +1,20 @@
 {
   "name": "isomorphic-react",
   "version": "1.0.0",
-  "description": "An isomorphic React application implementing latest development standards",
+  "description":
+    "An isomorphic React application implementing latest development standards",
   "main": "index.js",
   "scripts": {
     "postinstall": "npm install -g babel-cli cross-env webpack",
-    "start-dev": "cross-env NODE_ENV=development babel-node server --useServerRender=true --useLiveData=false"
+    "start-dev":
+      "cross-env NODE_ENV=development babel-node server --useServerRender=true --useLiveData=false",
+    "build": "cross-env webpack --config ./webpack.config.prod.babel.js",
+    "start-prod":
+      "npm run build && cross-env NODE_ENV=production babel-node server --useServerRender=true --useLiveData=true"
   },
   "keywords": [],
-  "author": "Elton Nascimento <eltongarbin@gmail.com> (https://github.com/eltongarbin)",
+  "author":
+    "Elton Nascimento <eltongarbin@gmail.com> (https://github.com/eltongarbin)",
   "license": "ISC",
   "dependencies": {
     "babel-cli": "^6.26.0",
@@ -47,6 +53,7 @@
     "webpack-hot-middleware": "^2.22.1"
   },
   "devDependencies": {
+    "uglifyjs-webpack-plugin": "^1.2.5",
     "webpack-cli": "^2.1.3"
   }
 }
